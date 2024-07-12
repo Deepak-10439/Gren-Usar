@@ -1,11 +1,12 @@
 package com.example.gren_usar
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,8 +16,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +35,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.gren_usar.ui.theme.AppShapes
 import com.example.gren_usar.ui.theme.GrenUsarTheme
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +50,13 @@ class LoginActivity : ComponentActivity() {
                     composable("loginScreen") {
                         LoginScreen(navController)
                     }
+                    composable("homeScreen") {
+                        HomeScreen()
+                    }
+                    composable("signupScreen") {
+                        SignUpScreen(navController)
+                    }
+
                     // Add other destinations as needed
                 }
             }
@@ -56,7 +68,7 @@ class LoginActivity : ComponentActivity() {
 fun LoginScreen(navController: NavController) {
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
-
+    val auth = Firebase.auth
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -70,7 +82,7 @@ fun LoginScreen(navController: NavController) {
             modifier = Modifier.fillMaxWidth()
         ) {
             Image(painter = painterResource(id = R.drawable.logo_), contentDescription = null)
-            Spacer(modifier = Modifier.height(0.dp))
+            Spacer(modifier = Modifier.height(20.dp))
             Text(
                 text = "Login to Your Account",
                 color = Color.White,
@@ -82,42 +94,48 @@ fun LoginScreen(navController: NavController) {
             )
             Spacer(modifier = Modifier.height(32.dp))
 
-            CustomTextField(value = email.value, onValueChange = {email.value = it}, hint = "Email")
+            CustomTextField(value = email.value, onValueChange = { email.value = it }, hint = "Email")
             Spacer(modifier = Modifier.height(20.dp))
 
             CustomTextField(value = password.value, onValueChange = { password.value = it }, hint = "Enter Password", isPassword = true)
             Spacer(modifier = Modifier.height(20.dp))
 
-            Button(
-                onClick = { navController.navigate("homeScreen") }, // Navigate to home screen
+            OutlinedButton(
+                onClick = { loginEmailPassUser(email.value, password.value, navController, auth) },
+                modifier = Modifier
+                    .size(width = 201.dp, height = 48.dp)
+                    .background(color = Color.Transparent, shape = AppShapes.small)
+                    .border(2.dp, Color.White, shape = AppShapes.small)
+            ) {
+                Text(text = "Login", color = Color.White)
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            TextButton(
+                onClick = { /* Handle forgot password action */ },
                 modifier = Modifier
                     .size(width = 311.dp, height = 48.dp)
                     .background(color = Color.Transparent, shape = AppShapes.small)
             ) {
-                Text(text = "Login", color = Color(0xFF33907C))
+                Text(text = "Forgot Your Password?", color = Color.White)
             }
 
-            Text(
-                text = "Forgot your password?",
-                color = Color.White,
-                modifier = Modifier
-                    .padding(top = 18.dp)
-                    .clickable { /* Handle forgot password */ }
-            )
+            Spacer(modifier = Modifier.height(20.dp))
 
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Button(
-                onClick = { navController.navigate("signupScreen") }, // Navigate to sign-up screen
-                modifier = Modifier
-                    .size(width = 311.dp, height = 48.dp)
-                    .background(color = Color.Transparent, shape = AppShapes.small)
-            ) {
-                Text(text = "Sign Up", color = Color.White)
+            Box {
+                OutlinedButton(
+                    onClick = { navController.navigate("signupScreen") },
+                    modifier = Modifier
+                        .size(width = 151.dp, height = 48.dp)
+                        .background(color = Color.Transparent, shape = AppShapes.small)
+                        .border(2.dp, Color.White, shape = AppShapes.small)
+                ) {
+                    Text(text = "Sign Up", color = Color.White)
+                }
             }
         }
     }
 }
+
 
 @Preview
 @Composable
@@ -127,4 +145,16 @@ fun LoginScreenPreview() {
     }
 }
 
-
+fun loginEmailPassUser(email: String, password: String, navController: NavController, auth: FirebaseAuth) {
+    if (email.isNotEmpty() && password.isNotEmpty()) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnSuccessListener { authResult ->
+                navController.navigate("homeScreen") // Navigate to home screen
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(navController.context, "Authentication failed: ${exception.message}", Toast.LENGTH_LONG).show()
+            }
+    } else {
+        Toast.makeText(navController.context, "Email and Password must not be empty", Toast.LENGTH_SHORT).show()
+    }
+}

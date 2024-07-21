@@ -33,8 +33,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.gren_usar.ui.theme.AppShapes
 import com.example.gren_usar.ui.theme.GrenUsarTheme
@@ -46,17 +44,7 @@ class SignUpActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             GrenUsarTheme {
-                val navController = rememberNavController()
 
-                NavHost(navController = navController, startDestination = "signupScreen") {
-                    composable("signupScreen") {
-                        SignUpScreen(navController)
-                    }
-                    composable("loginScreen") {
-                        // Login screen composable
-                    }
-                    // Add other destinations as needed
-                }
             }
         }
     }
@@ -89,7 +77,7 @@ fun SignUpScreen(navController: NavController) {
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Image(painter = painterResource(id = R.drawable.logo_), contentDescription = null)
+            Image(painter = painterResource(id = R.drawable.lgo), contentDescription = null, modifier = Modifier.height(180.dp).width(250.dp).padding(10.dp,0.dp,0.dp,0.dp))
             Spacer(modifier = Modifier.height(1.dp))
             Text(
                 text = "Sign Up",

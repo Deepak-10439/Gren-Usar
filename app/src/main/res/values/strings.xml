@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Gren-Usar</string>
+    
+    <string name="Beverages">Beverages</string>
+    <string name="bread_bakery">Bread &amp;Bakery</string>
+    <string name="Vegetables">Vegetables</string>
+    <string name="Fruits">Fruits</string>
+    <string name="Egg">Egg</string>
+    <string name="Frozen_Veg">Frozen Veg</string>
+    <string name="Home_Care">Homecare</string>
+    <string name="Pet_Care">Pet Care</string>
+    
+    
+    <string name="Coca_Cola">Coca-Cola</string>
+    <string name="Lemonade">Lemonade</string>
+    <string name="Chocolate">Chocolate</string>
+    <string name="Whisky">Whisky</string>
+    <string name="Coco">Coco</string>
+    <string name="Fruit_punch">Fruit Punch</string>
 </resources>

@@ -1,9 +1,7 @@
 package com.example.gren_usar
 
-import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -30,9 +28,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.gren_usar.ui.theme.AppShapes
 import com.example.gren_usar.ui.theme.GrenUsarTheme
 import com.google.firebase.Firebase
@@ -40,32 +35,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 
 class LoginActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            GrenUsarTheme {
-                val navController = rememberNavController()
 
-                NavHost(navController = navController, startDestination = "loginScreen") {
-                    composable("loginScreen") {
-                        LoginScreen(navController)
-                    }
-                    composable("homeScreen") {
-                        HomeScreen()
-                    }
-                    composable("signupScreen") {
-                        SignUpScreen(navController)
-                    }
-
-                    // Add other destinations as needed
-                }
-            }
-        }
-    }
 }
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(navController: NavController, onLoginSuccess: () -> Unit) {
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
     val auth = Firebase.auth
@@ -101,7 +75,7 @@ fun LoginScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(20.dp))
 
             OutlinedButton(
-                onClick = { loginEmailPassUser(email.value, password.value, navController, auth) },
+                onClick = { navController.navigate("Home") },
                 modifier = Modifier
                     .size(width = 201.dp, height = 48.dp)
                     .background(color = Color.Transparent, shape = AppShapes.small)
@@ -123,7 +97,7 @@ fun LoginScreen(navController: NavController) {
 
             Box {
                 OutlinedButton(
-                    onClick = { navController.navigate("signupScreen") },
+                    onClick = { navController.navigate("signup") },
                     modifier = Modifier
                         .size(width = 151.dp, height = 48.dp)
                         .background(color = Color.Transparent, shape = AppShapes.small)
@@ -141,7 +115,7 @@ fun LoginScreen(navController: NavController) {
 @Composable
 fun LoginScreenPreview() {
     GrenUsarTheme {
-        LoginScreen(rememberNavController())
+//        LoginScreen(rememberNavController())
     }
 }
 
@@ -149,7 +123,7 @@ fun loginEmailPassUser(email: String, password: String, navController: NavContro
     if (email.isNotEmpty() && password.isNotEmpty()) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener { authResult ->
-                navController.navigate("homeScreen") // Navigate to home screen
+                navController.navigate("Home") // Navigate to home screen
             }
             .addOnFailureListener { exception ->
                 Toast.makeText(navController.context, "Authentication failed: ${exception.message}", Toast.LENGTH_LONG).show()

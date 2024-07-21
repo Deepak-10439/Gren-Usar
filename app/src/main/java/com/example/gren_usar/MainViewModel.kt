@@ -1,21 +1,28 @@
 package com.example.gren_usar
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.update
 
 class MainViewModel : ViewModel() {
+    private val _uiState = MutableStateFlow(GrenUiState())
+    val uiState: StateFlow<GrenUiState> = _uiState.asStateFlow()
 
-    private val _isReady = MutableStateFlow(false)
-    val isReady = _isReady.asStateFlow()
+    fun updateClickStatus(updatedText: String) {
+        _uiState.update {
+            it.copy(
+                clickStatus = updatedText
+            )
+        }
+    }
 
-    init {
-        viewModelScope.launch {
-            delay(3000L)
-            _isReady.value = true
+    fun updateSelectedCategory(updatedCategory: Int) {
+        _uiState.update {
+            it.copy(
+                selectedCategory = updatedCategory
+            )
         }
     }
 }

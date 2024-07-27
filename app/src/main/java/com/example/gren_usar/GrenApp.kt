@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -24,9 +23,10 @@ enum class GrenScreen {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun GrenApp(
-    mainViewModel: MainViewModel = viewModel(),
-    navController: NavHostController = rememberNavController()
+    mainViewModel: MainViewModel = viewModel()
 ) {
+    val navController = rememberNavController()
+
     NavHost(
         navController = navController,
         startDestination = GrenScreen.Login.name
@@ -41,7 +41,8 @@ fun GrenApp(
 
         composable(route = GrenScreen.Home.name) {
             Scaffold(
-                bottomBar = { BottomAppBar(navController) }
+                bottomBar = { BottomAppBar(navController) },
+                topBar = { TopAppBar(navController) }
             ) {
                 HomeScreen(
                     mainViewModel = mainViewModel,
@@ -55,6 +56,7 @@ fun GrenApp(
 
         composable(route = GrenScreen.Items.name) {
             Scaffold(
+                topBar = { ItemTopBar() },
                 bottomBar = { BottomAppBar(navController) }
             ) {
                 ItemsScreen(mainViewModel = mainViewModel)

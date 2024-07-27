@@ -2,6 +2,7 @@ package com.example.gren_usar
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -156,7 +157,7 @@ fun Banner_Images() {
     Box(
         modifier = Modifier
             .padding(1.dp)
-            .height(165.dp)
+            .height(160.dp)
             .fillMaxWidth()
     ) {
         Image(
@@ -248,20 +249,30 @@ fun BottomAppBar(navController: NavController) {
         )
 
         //For Profile Icon
+        // Profile Icon
         BottomAppBarItem(
             icon = Icons.Default.Person,
             label = "Profile",
             isSelected = currentScreen == GrenScreen.Profile.name,
             onClick = {
-                navController.navigate(GrenScreen.Profile.name) {
-                    popUpTo(navController.graph.startDestinationId) {
-                        saveState = true
-                    }
-                    launchSingleTop = true
-                    restoreState = true
-                }
+                navigateToScreen(navController, GrenScreen.Profile.name)
             }
         )
+    }
+}
+
+fun navigateToScreen(navController: NavController, screen: String) {
+    try {
+        Log.d("BottomAppBar", "Navigating to $screen")
+        navController.navigate(screen) {
+            popUpTo(navController.graph.startDestinationId) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+    } catch (e: Exception) {
+        Log.e("BottomAppBar", "Navigation error: ${e.message}")
     }
 }
 
@@ -332,6 +343,20 @@ fun TopAppBar(navController: NavController) {
                             .width(56.dp)
                             .height(62.dp)
                             .padding(horizontal = 10.dp)
+                            .clickable {
+                                Log.d("TopAppBar", "Carbon footprint button clicked")
+                                try {
+                                    navController.navigate(GrenScreen.Profile.name) {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
+                                    }
+                                } catch (e: Exception) {
+                                    Log.e("TopAppBar", "Navigation error: ${e.message}")
+                                }
+                            }
                     )
                     Icon(
                         imageVector = Icons.Default.ShoppingCart,
@@ -365,3 +390,14 @@ fun TopAppBar(navController: NavController) {
         }
     }
 }
+
+
+//@Composable
+//fun ProfileScreen() {
+//    Box(
+//        modifier = Modifier.fillMaxSize(),
+//        contentAlignment = Alignment.Center
+//    ) {
+//        Text(text = "Profile Screen", style = MaterialTheme.typography.displayLarge)
+//    }
+//}

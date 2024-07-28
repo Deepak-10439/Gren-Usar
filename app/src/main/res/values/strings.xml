@@ -9,6 +9,8 @@
     <string name="Frozen_Veg">Frozen Veg</string>
     <string name="Home_Care">Homecare</string>
     <string name="Pet_Care">Pet Care</string>
+    <string name="Popular_Product">Popular Product</string>
+    <string name="New_Product">New Product</string>
     
     
     <string name="Coca_Cola">Coca-Cola</string>
@@ -17,4 +19,9 @@
     <string name="Whisky">Whisky</string>
     <string name="Coco">Coco</string>
     <string name="Fruit_punch">Fruit Punch</string>
+    
+    <string name="Ultra_Soft">Ultra Soft</string>
+    <string name="Brocolli">Brocolli</string>
+    <string name="Fish">Fish</string>
+    <string name="Shampoo">Shampoo</string>
 </resources>

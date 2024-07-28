@@ -50,6 +50,7 @@ fun ProfileScreen() {
                 .height(402.dp)
                 .background(color = Color(0xFF33907C))
         ) {
+            Spacer(modifier = Modifier.height(5.dp))
             // Profile text and icons
             Row(
                 modifier = Modifier
@@ -342,7 +343,7 @@ fun ProfileScreen() {
                 height = 260,
                 month = "Aug",
                 modifier = Modifier
-                    .padding(start = 20.dp)
+                    .padding(start = 35.dp)
                     .offset(y = 255.dp) // Adjust this value to move the graph up or down
             )
             RectangleBarGraph(

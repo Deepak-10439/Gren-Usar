@@ -77,7 +77,7 @@ fun ItemsScreen(
                 ItemCard(
                     stringResourceId = it.stringResourceId,
                     imageResourceId = it.imageResourceId,
-                    Price = it.Price,
+                    price = it.Price,
                     value = it.footPrint
                 )
             }
@@ -90,7 +90,7 @@ fun ItemsScreen(
 fun ItemCard(
     stringResourceId: Int,
     imageResourceId: Int,
-    Price: Int,
+    price: Int,
     value: Float
 ) {
     val context = LocalContext.current
@@ -143,7 +143,7 @@ fun ItemCard(
                             )
                         )
                         Text(
-                            text = "$$Price",
+                            text = "$$price",
                             style = TextStyle(
                                 fontSize = 14.sp,
                                 fontFamily = FontFamily(Font(R.font.montserrat)),

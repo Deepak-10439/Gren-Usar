@@ -6,21 +6,24 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
@@ -36,7 +39,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -68,25 +71,144 @@ fun HomeScreen(
         topBar = { TopAppBar(navController = navController) },
         bottomBar = { BottomAppBar(navController = navController) }
     ) { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding)) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
             // Display the banner image
-            Banner_Images()
-
-            Spacer(modifier = Modifier.height(0.dp)) // Adjust the space as needed
+            item {
+                Banner_Images()
+                Spacer(modifier = Modifier.height(10.dp))
+            }
 
             // Display the grid of categories
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(4),
-                modifier = Modifier.padding(16.dp),
-            ) {
-                items(DataSource.loadCategories()) { category ->
-                    CategoryCard(
-                        context = LocalContext.current,
-                        stringResourceId = category.stringResourceId,
-                        imageResourceId = category.imageResourceId,
-                        mainViewModel = mainViewModel,
-                        onCategoryClick = onCategoryClick
+            item {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(4),
+                    modifier = Modifier
+                        .padding(5.dp)
+                        .height(187.dp)
+                ) {
+                    items(DataSource.loadCategories()) { category ->
+                        CategoryCard(
+                            context = LocalContext.current,
+                            stringResourceId = category.stringResourceId,
+                            imageResourceId = category.imageResourceId,
+                            mainViewModel = mainViewModel,
+                            onCategoryClick = onCategoryClick
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+            }
+
+            // New product and see all composable
+            item {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(160.dp, Alignment.Start),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.brands_to_follow),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 25.dp, start = 20.dp)
+                            .width(121.71206.dp)
+                            .height(20.dp)
                     )
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 25.dp)
+                            .width(87.dp)
+                            .height(23.dp)
+                            .background(
+                                color = Color(0xFF33907C),
+                                shape = RoundedCornerShape(size = 24.dp)
+                            )
+                    ) {
+                        Text(
+                            text = "See All",
+                            style = TextStyle(
+                                fontSize = 14.sp,
+                                fontFamily = FontFamily(Font(R.font.montserrat)),
+                                fontWeight = FontWeight(500),
+                                color = Color(0xFFFFFFFF),
+                            ),
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                }
+            }
+
+            // New Products displaying
+            item {
+                LazyRow(
+                    modifier = Modifier
+                        .padding(start = 20.dp, top = 10.dp)
+                ) {
+                    items(DataSource.loadItems(R.string.New_Product)) { item ->
+                        ItemCard(
+                            stringResourceId = item.stringResourceId,
+                            imageResourceId = item.imageResourceId,
+                            price = item.Price,
+                            value = item.footPrint
+                        )
+                    }
+                }
+            }
+
+            // Popular product and see all composable
+            item {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(160.dp, Alignment.Start),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.popular),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 25.dp, start = 20.dp)
+                            .width(121.71206.dp)
+                            .height(20.dp)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 25.dp)
+                            .width(87.dp)
+                            .height(23.dp)
+                            .background(
+                                color = Color(0xFF33907C),
+                                shape = RoundedCornerShape(size = 24.dp)
+                            )
+                    ) {
+                        Text(
+                            text = "See All",
+                            style = TextStyle(
+                                fontSize = 14.sp,
+                                fontFamily = FontFamily(Font(R.font.montserrat)),
+                                fontWeight = FontWeight(500),
+                                color = Color(0xFFFFFFFF),
+                            ),
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                }
+            }
+
+            // Popular Products displaying
+            item {
+                LazyRow(
+                    modifier = Modifier.padding(start = 20.dp, top = 10.dp)
+                ) {
+                    items(DataSource.loadItems(R.string.Popular_Product)) { item ->
+                        ItemCard(
+                            stringResourceId = item.stringResourceId,
+                            imageResourceId = item.imageResourceId,
+                            price = item.Price,
+                            value = item.footPrint
+                        )
+                    }
                 }
             }
         }
@@ -105,6 +227,7 @@ fun CategoryCard(
     Card(
         modifier = Modifier
             .padding(1.dp)
+            .fillMaxWidth()
             .background(color = Color.White)
             .clickable {
                 mainViewModel.updateClickStatus(categoryName)
@@ -166,9 +289,42 @@ fun Banner_Images() {
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight()
-                .clip(RectangleShape)
+                .shadow(
+                    elevation = 43.dp,
+                    spotColor = Color(0x123A4C82),
+                    ambientColor = Color(0x123A4C82)
+                )
+                .padding(0.dp)
+                .height(165.dp)
+                .background(color = Color(0xFF000000))
         )
+        Column(
+            verticalArrangement = Arrangement.Bottom,
+            modifier = Modifier
+                .padding(top = 10.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.fashionable_hats),
+                contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(start = 25.dp, top = 20.dp, bottom = 15.dp)
+            )
+            Box(modifier = Modifier
+                .padding(start = 20.dp, top = 10.dp)
+                .width(147.dp)
+                .height(28.dp)
+                .border(width = 1.dp, color = Color.White, shape = RoundedCornerShape(12.dp))
+                .background(color = Color.Transparent, shape = RoundedCornerShape(12.dp)))
+            {
+                Image(
+                    painter = painterResource(id = R.drawable.get_promocode_copy),
+                    contentDescription =null,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                )
+            }
+        }
     }
 }
 

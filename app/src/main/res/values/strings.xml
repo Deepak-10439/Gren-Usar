@@ -24,4 +24,7 @@
     <string name="Brocolli">Brocolli</string>
     <string name="Fish">Fish</string>
     <string name="Shampoo">Shampoo</string>
+
+    <string name="Alternative1">100% Bamboo...</string>
+    <string name="Alternative2"> Eco Toilet Paper</string>
 </resources>

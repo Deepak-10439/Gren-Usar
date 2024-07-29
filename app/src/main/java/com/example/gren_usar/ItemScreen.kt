@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,7 +37,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -78,7 +78,8 @@ fun ItemsScreen(
                     stringResourceId = it.stringResourceId,
                     imageResourceId = it.imageResourceId,
                     price = it.Price,
-                    value = it.footPrint
+                    value = it.footPrint,
+                    onClick = {}
                 )
             }
         }
@@ -91,12 +92,12 @@ fun ItemCard(
     stringResourceId: Int,
     imageResourceId: Int,
     price: Int,
-    value: Float
+    value: Float,
+    onClick: () -> Unit
 ) {
-    val context = LocalContext.current
-    Column(modifier = Modifier.padding(8.dp)) { // Reduced padding here
+    Column(modifier = Modifier.padding(8.dp)) {
         Card(
-            Modifier
+            modifier = Modifier
                 .border(
                     width = 2.dp,
                     color = Color(0x1A000000),
@@ -106,6 +107,7 @@ fun ItemCard(
                 .width(150.dp)
                 .height(200.dp)
                 .background(color = Color.White, shape = RoundedCornerShape(size = 10.dp))
+                .clickable { onClick() }
         ) {
             Column {
                 Box(
@@ -152,8 +154,6 @@ fun ItemCard(
                             )
                         )
                     }
-
-//                    Spacer(modifier = Modifier.height(5.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Image(
                             painter = painterResource(id = R.drawable.carbon_foot_print),

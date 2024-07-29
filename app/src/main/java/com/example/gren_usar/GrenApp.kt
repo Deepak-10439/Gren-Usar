@@ -17,7 +17,8 @@ enum class GrenScreen {
     Browse,
     Store,
     OrderHistory,
-    Profile
+    Profile,
+    ProductDetail
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -49,7 +50,8 @@ fun GrenApp(
                     onCategoryClick = {
                         mainViewModel.updateSelectedCategory(it)
                         navController.navigate(GrenScreen.Items.name)
-                    }
+                    },
+                    navController = navController
                 )
             }
         }
@@ -103,6 +105,8 @@ fun GrenApp(
             }
         }
 
-        // Add composable(route = GrenScreen.Cart.name) if needed
+        composable(route = GrenScreen.ProductDetail.name) {
+            ProductDetail()
+        }
     }
 }

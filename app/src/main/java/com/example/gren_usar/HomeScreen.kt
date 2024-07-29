@@ -152,7 +152,10 @@ fun HomeScreen(
                             stringResourceId = item.stringResourceId,
                             imageResourceId = item.imageResourceId,
                             price = item.Price,
-                            value = item.footPrint
+                            value = item.footPrint,
+                            onClick = {
+                                navController.navigate(GrenScreen.ProductDetail.name)
+                            }
                         )
                     }
                 }
@@ -199,14 +202,18 @@ fun HomeScreen(
             // Popular Products displaying
             item {
                 LazyRow(
-                    modifier = Modifier.padding(start = 20.dp, top = 10.dp)
+                    modifier = Modifier
+                        .padding(start = 20.dp, top = 10.dp)
                 ) {
-                    items(DataSource.loadItems(R.string.Popular_Product)) { item ->
+                    items(DataSource.loadItems(R.string.New_Product)) { item ->
                         ItemCard(
                             stringResourceId = item.stringResourceId,
                             imageResourceId = item.imageResourceId,
                             price = item.Price,
-                            value = item.footPrint
+                            value = item.footPrint,
+                            onClick = {
+                                navController.navigate("productDetail")
+                            }
                         )
                     }
                 }

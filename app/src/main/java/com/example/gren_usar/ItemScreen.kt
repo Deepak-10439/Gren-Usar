@@ -61,8 +61,7 @@ fun ItemsScreen(
 ) {
     Scaffold(
         topBar = { ItemTopBar() },
-        bottomBar = { BottomAppBar(navController ) }
-    ) {
+        bottomBar = { BottomAppBar(navController ) }){
         val grenUiState by mainViewModel.uiState.collectAsState()
         LazyVerticalGrid(
             columns = GridCells.Adaptive(150.dp),
@@ -71,7 +70,12 @@ fun ItemsScreen(
             horizontalArrangement = Arrangement.spacedBy(3.dp)
         ) 
         {   
-            
+            item { 
+                Spacer(modifier = Modifier.padding(65.dp))
+            }
+            item {
+                Spacer(modifier = Modifier.padding(65.dp))
+            }
             items(DataSource.loadItems(grenUiState.selectedCategory)) {
                 Spacer(modifier = Modifier.height(10.dp))
                 ItemCard(

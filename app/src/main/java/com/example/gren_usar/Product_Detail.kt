@@ -43,13 +43,15 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
+import androidx.navigation.NavController
 
 @Composable
-fun ProductDetail() {
+fun ProductDetail(
+    navController: NavController
+) {
     var showEcoImpact by remember { mutableStateOf(true) }
 
     LazyColumn {
@@ -58,7 +60,7 @@ fun ProductDetail() {
             // For top image shape rectangle and its components
             Box(
                 modifier = Modifier
-                    .width(375.dp)
+                    .fillMaxWidth()
                     .height(226.dp)
                     .background(color = Color.Black)
             ) {
@@ -301,7 +303,8 @@ fun ProductDetail() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(250.dp) // Adjust as needed
-                        .background(color = Color(0xFFEFEAEA))
+                        .background(color = Color(0xFFEFEAEA)
+                        )
                 ) {
                     // Eco Impact screen content
                     Text(
@@ -390,7 +393,8 @@ fun ProductDetail() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(300.dp) // Adjust as needed
-                        .background(color = Color(0xFFCFFFDC))
+                        .background(color = Color(0xFFCFFFDC)
+                        ),
                 ) {
                     // Alternatives screen content
                     Row {
@@ -399,11 +403,13 @@ fun ProductDetail() {
                                 .padding(start = 20.dp,top = 10.dp)
                         ) {
                             ItemCard(
-                                stringResourceId = R.string.Alternative1,
-                                imageResourceId = R.drawable.eco_toilet_paper,
-                                price = 35,
-                                value = 0.2f,
-                                onClick = {}
+                                    stringResourceId = R.string.Alternative1,
+                                    imageResourceId = R.drawable.eco_toilet_paper,
+                                    price = 25,
+                                    value = 0.25f,
+                                    onClick = {
+                                        navController.navigate(GrenScreen.Check_out_Screen_1.name)
+                                    }
                             )
                             Box(
                                 modifier = Modifier
@@ -425,6 +431,7 @@ fun ProductDetail() {
                                     ),
                                     modifier = Modifier
                                         .align(Alignment.Center)
+
                                 )
                             }
                         }
@@ -475,13 +482,13 @@ fun ProductDetail() {
                     ambientColor = Color(0x123A4C82)
                 )
                 .padding(0.dp)
-                .width(375.dp)
+                .fillMaxWidth()
                 .height(70.dp)
                 .background(color = Color(0xFFFFFFFF))
             ){
                 Box(modifier = Modifier
                     .align(Alignment.Center)
-                    .width(270.dp)
+                    .fillMaxWidth()
                     .height(48.dp)
                     .background(color = Color(0xFF33907C), shape = RoundedCornerShape(35.dp))
                 ){
@@ -644,8 +651,4 @@ fun LikeIcon() {
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewProductDetail() {
-    ProductDetail()
-}
+

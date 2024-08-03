@@ -18,7 +18,9 @@ enum class GrenScreen {
     Store,
     OrderHistory,
     Profile,
-    ProductDetail
+    ProductDetail,
+    Check_out_Screen_1,
+    Check_out_Screen_2
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -30,7 +32,7 @@ fun GrenApp(
 
     NavHost(
         navController = navController,
-        startDestination = GrenScreen.Login.name
+        startDestination = GrenScreen.Check_out_Screen_2.name
     ) {
         composable(route = GrenScreen.Login.name) {
             LoginScreen(navController, onLoginSuccess = {
@@ -44,7 +46,7 @@ fun GrenApp(
             Scaffold(
                 bottomBar = { BottomAppBar(navController) },
                 topBar = { TopAppBar(navController) }
-            ) {
+            ) { innerPadding ->
                 HomeScreen(
                     mainViewModel = mainViewModel,
                     onCategoryClick = {
@@ -106,7 +108,24 @@ fun GrenApp(
         }
 
         composable(route = GrenScreen.ProductDetail.name) {
-            ProductDetail()
+            ProductDetail(navController = navController)
+        }
+
+        // Add routes for checkout screens
+        composable(route = GrenScreen.Check_out_Screen_1.name) {
+            Scaffold(
+                topBar = { TopApp_Checkout(text = "My Cart") },
+            ) {
+                CheckOutScreen_1(navController = navController)
+            }
+        }
+
+        composable(route = GrenScreen.Check_out_Screen_2.name) {
+            Scaffold(
+                topBar = { TopApp_Checkout(text = "Take a Photo \n  of Garbage") }
+            ) {
+                Checkout_Screen_2()
+            }
         }
     }
 }

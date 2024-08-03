@@ -205,7 +205,7 @@ fun HomeScreen(
                     modifier = Modifier
                         .padding(start = 20.dp, top = 10.dp)
                 ) {
-                    items(DataSource.loadItems(R.string.New_Product)) { item ->
+                    items(DataSource.loadItems(R.string.Popular_Product)) { item ->
                         ItemCard(
                             stringResourceId = item.stringResourceId,
                             imageResourceId = item.imageResourceId,

@@ -32,7 +32,7 @@ fun GrenApp(
 
     NavHost(
         navController = navController,
-        startDestination = GrenScreen.Check_out_Screen_2.name
+        startDestination = GrenScreen.Check_out_Screen_1.name
     ) {
         composable(route = GrenScreen.Login.name) {
             LoginScreen(navController, onLoginSuccess = {
@@ -114,7 +114,7 @@ fun GrenApp(
         // Add routes for checkout screens
         composable(route = GrenScreen.Check_out_Screen_1.name) {
             Scaffold(
-                topBar = { TopApp_Checkout(text = "My Cart") },
+                topBar = { TopApp_Checkout_1() },
             ) {
                 CheckOutScreen_1(navController = navController)
             }
@@ -122,9 +122,9 @@ fun GrenApp(
 
         composable(route = GrenScreen.Check_out_Screen_2.name) {
             Scaffold(
-                topBar = { TopApp_Checkout(text = "Take a Photo \n  of Garbage") }
+                topBar = { TopApp_Checkout_2() }
             ) {
-                Checkout_Screen_2()
+                CheckoutScreen2(navController = navController)
             }
         }
     }

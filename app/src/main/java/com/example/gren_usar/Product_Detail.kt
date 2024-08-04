@@ -55,6 +55,9 @@ fun ProductDetail(
     var showEcoImpact by remember { mutableStateOf(true) }
 
     LazyColumn {
+        item {
+            Spacer(modifier = Modifier.height(40.dp))
+        }
         // For top image and its icons
         item {
             // For top image shape rectangle and its components
@@ -303,7 +306,8 @@ fun ProductDetail(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(250.dp) // Adjust as needed
-                        .background(color = Color(0xFFEFEAEA)
+                        .background(
+                            color = Color(0xFFEFEAEA)
                         )
                 ) {
                     // Eco Impact screen content
@@ -393,7 +397,8 @@ fun ProductDetail(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(300.dp) // Adjust as needed
-                        .background(color = Color(0xFFCFFFDC)
+                        .background(
+                            color = Color(0xFFCFFFDC)
                         ),
                 ) {
                     // Alternatives screen content
@@ -595,8 +600,8 @@ fun ProductDetail(
                                 color = Color(0xFF4F4F4F),
                             ),
                             modifier = Modifier
-                                        .align(Alignment.CenterVertically)
-                                        .padding(start = 100.dp, top = 10.dp)
+                                .align(Alignment.CenterVertically)
+                                .padding(start = 100.dp, top = 10.dp)
                         )
                     }
                 }

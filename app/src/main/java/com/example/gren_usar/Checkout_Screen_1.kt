@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -37,6 +39,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -47,7 +50,7 @@ fun CheckOutScreen_1(
     navController: NavController
 ) {
     Scaffold(
-        topBar = { TopApp_Checkout(text = "My Cart") },
+        topBar = { TopApp_Checkout_1() },
     ) { innerPadding ->
         Box(
             modifier = Modifier
@@ -315,7 +318,10 @@ fun CheckOutScreen_1(
                             .align(Alignment.Center)
                             .width(290.dp)
                             .height(48.dp)
-                            .background(color = Color(0xFF33907C), shape = RoundedCornerShape(35.dp))
+                            .background(
+                                color = Color(0xFF33907C),
+                                shape = RoundedCornerShape(35.dp)
+                            )
                     ) {
                         Text(
                             text = "Continue",
@@ -339,46 +345,111 @@ fun CheckOutScreen_1(
         }
     }
 }
-
+@Preview
 @Composable
-fun TopApp_Checkout(
-    text:String
+fun TopApp_Checkout_1(
+    navController: NavController = NavController(LocalContext.current)
 ) {
     Box(
         modifier = Modifier
-            .padding(top = 20.dp)
+            .padding(top = 45.dp)
             .fillMaxWidth()
-            .height(100.dp)
+            .height(80.dp)
             .background(color = Color(0xFF33907C))
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start,
+            horizontalArrangement = Arrangement.Center,
             modifier = Modifier
+                .padding(top = 20.dp)
                 .fillMaxWidth()
-                .padding(start = 5.dp, top = 25.dp, bottom = 10.dp)
-                .width(343.dp)
-                .height(58.dp)
+                .fillMaxHeight()
+                ) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = null,
+                tint = Color.White,
+                modifier = Modifier
+                    .padding(start = 16.dp, bottom = 15.dp) // Padding for icon
+                    .size(24.dp)
+                    .clickable {
+                        navController.navigate(GrenScreen.ProductDetail.name)
+                    }
+            )
+            Spacer(modifier = Modifier.width(5.dp)) // Spacing between icon and text
+            Box(
+                modifier = Modifier
+                    .weight(1f) // Ensure text is centered
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = "My Cart",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily(Font(R.font.montserrat)),
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    ),
+                    modifier = Modifier
+                        .padding(top = 10.dp)
+                        .align(Alignment.Center) // Center the text
+                        .fillMaxHeight()
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun TopApp_Checkout_2() {
+    Box(
+        modifier = Modifier
+            .padding(top = 45.dp)
+            .fillMaxWidth()
+            .height(80.dp)
+            .background(color = Color(0xFF33907C))
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .padding(top = 25.dp)
+                .fillMaxWidth()
+                .fillMaxHeight()
         ) {
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = null,
                 tint = Color.White,
-                modifier = Modifier.padding(end = 11.dp, start =10.dp)
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = text,
-                style = TextStyle(
-                    fontSize = 25.sp,
-                    fontFamily = FontFamily(Font(R.font.montserrat)),
-                    fontWeight = FontWeight(700),
-                    color = Color(0xFFFFFFFF),
-                ),
                 modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(start = 16.dp, bottom = 30.dp)
+                    .size(24.dp)
+                    .clickable {
 
+                    }
             )
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.width(5.dp)) // Spacing between icon and text
+            Box(
+                modifier = Modifier
+                    .padding(bottom = 0.dp)
+                    .weight(1f) // Ensure text is centered
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = "Take a Photo of Garbage",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily(Font(R.font.montserrat)),
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    ),
+                    modifier = Modifier
+                        .align(Alignment.Center) // Center the text
+                        .fillMaxHeight()
+                )
+            }
         }
     }
 }
+

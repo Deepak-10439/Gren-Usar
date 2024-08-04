@@ -471,8 +471,9 @@ fun TopAppBar(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(175.dp)
+            .height(200.dp)
             .background(color = Color(0xFF33907C))
+            .padding(top = 10.dp)
     ) {
         // For categories and search bar
         Column(

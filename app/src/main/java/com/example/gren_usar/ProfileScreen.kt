@@ -49,6 +49,7 @@ fun ProfileScreen() {
                 .fillMaxWidth()
                 .height(402.dp)
                 .background(color = Color(0xFF33907C))
+                .padding(top = 30.dp)
         ) {
             Spacer(modifier = Modifier.height(5.dp))
             // Profile text and icons
@@ -253,7 +254,7 @@ fun ProfileScreen() {
                     painter = painterResource(id = R.drawable.tree),
                     contentDescription = null,
                     modifier = Modifier
-                        .padding(start = 10.dp)
+                        .padding(start = 10.dp, end = 40.dp)
                 )
                 Column {
                     Box(modifier = Modifier

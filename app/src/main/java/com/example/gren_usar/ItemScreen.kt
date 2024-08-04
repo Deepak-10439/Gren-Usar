@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -36,6 +37,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -197,22 +199,22 @@ fun CarbonFootprintBar(value: Float) {
 @Preview
 @Composable
 fun ItemTopBar(
-navController: NavHostController = rememberNavController(),
+    navController: NavHostController = rememberNavController(),
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = GrenScreen.valueOf(
         backStackEntry?.destination?.route ?: GrenScreen.Items.name
     )
     val canNavigateBack = navController.previousBackStackEntry != null
+
     // For Green Background
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(145.dp)
+            .height(165.dp)
             .background(color = Color(0xFF33907C))
-            .padding(15.dp)
+            .padding(horizontal = 16.dp, vertical = 24.dp) // Adjust padding
     ) {
-        // For Screen name and 3 UI elements
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxHeight()
@@ -220,31 +222,37 @@ navController: NavHostController = rememberNavController(),
             // For back Icon and screen name
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth().padding(top =20.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
-                    contentDescription = null,
+                    contentDescription = "Back",
                     tint = Color.White,
-                    modifier = Modifier.padding(1.dp)
+                    modifier = Modifier
+                        .size(24.dp) // Consistent icon size
+                        .clickable {
+                            if (canNavigateBack) {
+                                navController.navigateUp() // Handle back navigation
+                            }
+                        }
                 )
                 Text(
-                    text = "$currentScreen",
+                    text = currentScreen.name, // Display screen name
                     style = TextStyle(
-                        fontSize = 24.sp,
+                        fontSize = 20.sp, // Adjust font size
                         fontFamily = FontFamily(Font(R.font.montserrat)),
-                        fontWeight = FontWeight(700),
-                        color = Color(0xFFFFFFFF),
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
                         textAlign = TextAlign.Center,
                     ),
                     modifier = Modifier
-                        .fillMaxWidth()
                         .weight(1f)
+                        .padding(horizontal = 16.dp) // Padding around text
                 )
-                Spacer(modifier = Modifier.width(24.dp))
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             // For 3 UI elements
             Row(
@@ -253,117 +261,65 @@ navController: NavHostController = rememberNavController(),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 // For Sort By
-                Box(
-                    modifier = Modifier
-                        .border(
-                            width = 2.dp,
-                            color = Color.White,
-                            shape = RoundedCornerShape(23.dp)
-                        )
-                        .width(112.dp)
-                        .height(36.dp)
-                        .padding(0.dp)
-                ) {
-                    // For Sort By Text and its icon
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.List,
-                            contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier.padding(7.dp)
-                        )
-                        Text(
-                            text = "Sort By",
-                            style = TextStyle(
-                                fontSize = 16.sp,
-                                fontFamily = FontFamily(Font(R.font.montserrat)),
-                                fontWeight = FontWeight(700),
-                                color = Color(0xFFFFFFFF),
-                                textAlign = TextAlign.Center,
-                            ),
-                            modifier = Modifier.padding(start = 0.dp)
-                        )
-                    }
-                }
+                ButtonWithIconAndText(
+                    icon = Icons.Default.List,
+                    text = "Sort By"
+                )
 
                 // For Location
-                Box(
-                    modifier = Modifier
-                        .border(
-                            width = 2.dp,
-                            color = Color.White,
-                            shape = RoundedCornerShape(23.dp)
-                        )
-                        .width(112.dp)
-                        .height(36.dp)
-                ) {
-                    // For Location Text and its icon
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.LocationOn,
-                            contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier.padding(7.dp)
-                        )
-                        Text(
-                            text = "Location",
-                            style = TextStyle(
-                                fontSize = 15.sp,
-                                fontFamily = FontFamily(Font(R.font.montserrat)),
-                                fontWeight = FontWeight(700),
-                                color = Color(0xFFFFFFFF),
-                                textAlign = TextAlign.Center,
-                            ),
-                            modifier = Modifier.padding(start = 0.dp)
-                        )
-                    }
-                }
+                ButtonWithIconAndText(
+                    icon = Icons.Default.LocationOn,
+                    text = "Location"
+                )
 
                 // For Category
-                Box(
-                    modifier = Modifier
-                        .border(
-                            width = 2.dp,
-                            color = Color.White,
-                            shape = RoundedCornerShape(23.dp)
-                        )
-                        .width(112.dp)
-                        .height(36.dp)
-                ) {
-                    // For category Text and its icon
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
-                            contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier.padding(5.dp)
-                        )
-                        Text(
-                            text = "Category",
-                            style = TextStyle(
-                                fontSize = 15.sp,
-                                fontFamily = FontFamily(Font(R.font.montserrat)),
-                                fontWeight = FontWeight(700),
-                                color = Color(0xFFFFFFFF),
-                                textAlign = TextAlign.Center,
-                            ),
-                            modifier = Modifier.padding(start = 0.dp)
-                        )
-                    }
-                }
+                ButtonWithIconAndText(
+                    icon = Icons.Default.Menu,
+                    text = "Category"
+                )
             }
+        }
+    }
+}
+
+@Composable
+fun ButtonWithIconAndText(
+    icon: ImageVector,
+    text: String
+) {
+    Box(
+        modifier = Modifier
+            .border(
+                width = 2.dp,
+                color = Color.White,
+                shape = RoundedCornerShape(23.dp)
+            )
+            .width(112.dp)
+            .height(36.dp)
+            .padding(horizontal = 8.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = Color.White,
+                modifier = Modifier.size(16.dp) // Consistent icon size
+            )
+            Spacer(modifier = Modifier.width(4.dp))
+            Text(
+                text = text,
+                style = TextStyle(
+                    fontSize = 14.sp, // Adjust font size
+                    fontFamily = FontFamily(Font(R.font.montserrat)),
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    textAlign = TextAlign.Center
+                )
+            )
         }
     }
 }

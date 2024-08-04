@@ -1,22 +1,23 @@
 package com.example.gren_usar.data
 
-import okhttp3.MultipartBody
-import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
-import retrofit2.http.Path
+// Define data classes to represent the structure of the API response
+data class EdenItem(
+    val label: String,
+    val confidence: Double,
+    val x_min: Float,
+    val x_max: Float,
+    val y_min: Float,
+    val y_max: Float
+)
 
-interface EdenAIService {
-    @Multipart
-    @POST("object-detection/launch")
-    fun launchExecution(
-        @Part file: MultipartBody.Part
-    ): Call<LaunchExecutionResponse>
+data class ApiResponse(
+    val items: List<Item>,
+    val status: String,
+    val provider: String,
+    val cost: Double
+)
 
-    @GET("object-detection/result/{execution_id}")
-    fun getExecutionResult(
-        @Path("execution_id") executionId: String
-    ): Call<DetectionResponse>
+// Function to merge items from multiple API responses
+fun mergeItems(responses: List<ApiResponse>): List<Item> {
+    return responses.flatMap { it.items }
 }

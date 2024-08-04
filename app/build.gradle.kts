@@ -69,6 +69,7 @@ dependencies {
 
     // ConstraintLayout
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.crashlytics.buildtools)
 
     // Testing Libraries
     testImplementation(libs.junit)
@@ -92,6 +93,7 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
+    implementation (libs.firebase.storage.ktx)
 
     // Camera and Gallery
     implementation(libs.androidx.camera.camera2)
@@ -102,4 +104,20 @@ dependencies {
 
     // LiveData
     implementation(libs.androidx.runtime.livedata)
+
+    //retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+    implementation(libs.androidx.lifecycle.runtime.ktx.v231)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    implementation(libs.androidx.activity.compose.v131)
+    implementation(libs.glide)
+    implementation(libs.compiler)
+
+    implementation (libs.okhttp.v492)
+    implementation(libs.okhttp.v491)
+    implementation(libs.gson)
 }

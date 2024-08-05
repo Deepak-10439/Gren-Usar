@@ -62,7 +62,7 @@ fun LoginScreen(navController: NavController, onLoginSuccess: () -> Unit) {
                 color = Color.White,
                 fontSize = 28.sp,
                 modifier = Modifier
-                    .padding(top = 20.dp)
+                    .padding(start = 20.dp, top = 20.dp)
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
             )
@@ -106,8 +106,9 @@ fun LoginScreen(navController: NavController, onLoginSuccess: () -> Unit) {
                     onClick = { navController.navigate("signup") },
                     modifier = Modifier
                         .size(width = 151.dp, height = 48.dp)
-                        .background(color = Color.Transparent, shape = AppShapes.small)
+                        .background(color = Color.Transparent,shape = AppShapes.small)
                         .border(2.dp, Color.White, shape = AppShapes.small)
+
                 ) {
                     Text(text = "Sign Up", color = Color.White)
                 }

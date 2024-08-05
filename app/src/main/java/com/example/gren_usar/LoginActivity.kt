@@ -75,7 +75,13 @@ fun LoginScreen(navController: NavController, onLoginSuccess: () -> Unit) {
             Spacer(modifier = Modifier.height(20.dp))
 
             OutlinedButton(
-                onClick = { navController.navigate("Home") },
+                onClick = {
+                    loginEmailPassUser(
+                        email.value,
+                        password.value,
+                        navController,
+                        auth)
+                          },
                 modifier = Modifier
                     .size(width = 201.dp, height = 48.dp)
                     .background(color = Color.Transparent, shape = AppShapes.small)

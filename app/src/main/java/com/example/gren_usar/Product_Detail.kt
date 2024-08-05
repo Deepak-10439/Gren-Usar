@@ -413,7 +413,7 @@ fun ProductDetail(
                                     price = 25,
                                     value = 0.25f,
                                     onClick = {
-                                        navController.navigate(GrenScreen.Check_out_Screen_1.name)
+
                                     }
                             )
                             Box(
@@ -449,7 +449,9 @@ fun ProductDetail(
                                 imageResourceId = R.drawable.eco_toilet_paper_2,
                                 price = 25,
                                 value = 0.25f,
-                                onClick = {}
+                                onClick = {
+                                    navController.navigate(GrenScreen.Check_out_Screen_1.name)
+                                }
                             )
                             Box(
                                 modifier = Modifier
@@ -493,9 +495,12 @@ fun ProductDetail(
             ){
                 Box(modifier = Modifier
                     .align(Alignment.Center)
-                    .fillMaxWidth()
+                    .width(311.dp)
                     .height(48.dp)
-                    .background(color = Color(0xFF33907C), shape = RoundedCornerShape(35.dp))
+                    .background(color = Color(0xFF33907C), shape = RoundedCornerShape(15.dp))
+                    .clickable {
+                        navController.navigate(GrenScreen.Check_out_Screen_1.name)
+                    }
                 ){
                     Text(
                         text = "Add To Cart",

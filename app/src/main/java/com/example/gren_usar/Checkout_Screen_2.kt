@@ -121,8 +121,7 @@ fun CheckoutScreen2(
             uri?.let { imageUri ->
                 val bitmap = getBitmapFromUri(context, imageUri)
                 selectedBitmap.value = bitmap
-
-                // Upload image and get download URL
+                Toast.makeText(navController.context, "Analyzing Image, please wait...", Toast.LENGTH_LONG).show()// Upload image and get download URL
                 uploadImageToFirebase(context, imageUri, storageReference) { downloadUrl ->
                     Log.d("ImageUpload", "Image URL: $downloadUrl")
 
@@ -312,7 +311,7 @@ fun CheckoutScreen2(
                         modifier = Modifier
                             .width(290.dp)
                             .height(48.dp)
-                            .background(Color(0xFF3A4C82), RoundedCornerShape(15.dp)),
+                            .background(Color(0xFF33907C), RoundedCornerShape(15.dp)),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
@@ -324,7 +323,7 @@ fun CheckoutScreen2(
                             ),
                             textAlign = TextAlign.Center,
                             modifier = Modifier.clickable {
-                                navController.navigate(GrenScreen.Check_out_Screen_1.name)
+                                navController.navigate(GrenScreen.Check_out_Screen_3.name)
                             }
                         )
                     }

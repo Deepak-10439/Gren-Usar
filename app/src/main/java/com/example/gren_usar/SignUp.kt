@@ -1,9 +1,6 @@
 package com.example.gren_usar
 
-import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -27,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,17 +36,6 @@ import com.example.gren_usar.ui.theme.AppShapes
 import com.example.gren_usar.ui.theme.GrenUsarTheme
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-
-class SignUpActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            GrenUsarTheme {
-
-            }
-        }
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
@@ -104,9 +91,9 @@ fun SignUpScreen(navController: NavController) {
                     .width(151.dp)
                     .height(48.dp)
                     .border(2.dp, Color.White, shape = AppShapes.small)
-                    .background(shape = AppShapes.small, color = Color.Transparent)
+                    .background(shape = AppShapes.small, color = Color(0xFF33907C))
             ) {
-                Text(text = "Create", color = Color.White)
+                Text(text = "Create Account", color = Color.White)
             }
         }
     }
@@ -121,7 +108,7 @@ fun CustomTextField(
 ) {
     Box(
         modifier = Modifier
-            .widthIn(250.dp,311.dp)
+            .widthIn(250.dp, 311.dp)
             .height(48.dp)
             .background(Color.Transparent, shape = AppShapes.small)
             .padding(0.dp)
@@ -130,6 +117,7 @@ fun CustomTextField(
             value = value,
             onValueChange = onValueChange,
             modifier = Modifier.fillMaxSize(),
+            textStyle = TextStyle(color = Color.White),
             decorationBox = { innerTextField ->
                 Box(
                     contentAlignment = Alignment.CenterStart,
@@ -156,7 +144,7 @@ fun CreateUserAccount(firstName: String, lastName: String, email: String, passwo
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener { authResult ->
                 Toast.makeText(navController.context, "Account Created Successfully", Toast.LENGTH_LONG).show()
-                navController.navigate("loginScreen") // Navigate to login screen
+                navController.navigate(GrenScreen.Login.name) // Navigate to login screen
             }
             .addOnFailureListener { exception ->
                 Toast.makeText(navController.context, "Error: ${exception.message}", Toast.LENGTH_SHORT).show()

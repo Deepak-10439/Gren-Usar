@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,7 +19,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -28,12 +26,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -41,16 +43,23 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun CheckOutScreen_1(
+fun CheckOutScreen_3(
     navController: NavController
 ) {
+    var labelSize by remember { mutableStateOf(0) }
+    var buttonText by remember { mutableStateOf("Continue") }
+
+    LaunchedEffect(Unit) {
+        kotlinx.coroutines.delay(1000L)
+        labelSize = 13
+        buttonText = "Place Order"
+    }
 
     Scaffold(
         topBar = { TopApp_Checkout_1(navController) },
@@ -204,7 +213,7 @@ fun CheckOutScreen_1(
                                 )
                                 .width(142.dp)
                                 .height(177.dp)
-                                .clickable {
+                                .clickable { 
                                     navController.navigate(GrenScreen.Check_out_Screen_2.name)
                                 },
                             contentAlignment = Alignment.Center
@@ -230,13 +239,15 @@ fun CheckOutScreen_1(
                         }
                     }
                 }
+
                 Spacer(modifier = Modifier.weight(1f))
+
                 // Content at the bottom
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(color = Color(0xFFFFFFFF))
-                        .padding(horizontal = 15.dp,)
+                        .padding(horizontal = 15.dp)
                 ) {
                     Column {
                         Text(
@@ -267,7 +278,7 @@ fun CheckOutScreen_1(
                                 ),
                             )
                             Text(
-                                text = "$25\n$1",
+                                text = "$25\n Free",
                                 style = TextStyle(
                                     fontSize = 14.sp,
                                     lineHeight = 20.sp,
@@ -278,7 +289,38 @@ fun CheckOutScreen_1(
                                 )
                             )
                         }
-
+                        // Add the new Text here based on the labelSize state
+                        if (labelSize > 0) {
+                            Row(
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier
+                                    .padding(top = 15.dp)
+                                    .fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "Garbage x$labelSize",
+                                    style = TextStyle(
+                                        fontSize = 15.sp,
+                                        lineHeight = 20.sp,
+                                        fontFamily = FontFamily(Font(R.font.montserrat)),
+                                        fontWeight = FontWeight(500),
+                                        color = Color(0xFF000000),
+                                    ),
+                                )
+                                Text(
+                                    text = "-3$",
+                                    style = TextStyle(
+                                        fontSize = 14.sp,
+                                        lineHeight = 20.sp,
+                                        fontFamily = FontFamily(Font(R.font.montserrat)),
+                                        fontWeight = FontWeight(500),
+                                        color = Color(0xFF000000),
+                                        textAlign = TextAlign.Right,
+                                    )
+                                )
+                            }
+                        }
                         Row(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically,
@@ -295,11 +337,9 @@ fun CheckOutScreen_1(
                                     fontWeight = FontWeight(600),
                                     color = Color(0xFF000000),
                                 ),
-                                modifier = Modifier
-                                    .padding(bottom = 20.dp)
                             )
                             Text(
-                                text = "$26",
+                                text = "$22",
                                 style = TextStyle(
                                     fontSize = 16.sp,
                                     lineHeight = 20.sp,
@@ -307,13 +347,13 @@ fun CheckOutScreen_1(
                                     fontWeight = FontWeight(600),
                                     color = Color(0xFF000000),
                                     textAlign = TextAlign.Right,
-                                ),
-                                modifier = Modifier
-                                    .padding(bottom = 20.dp)
+                                )
                             )
                         }
+                        Spacer(modifier = Modifier.height(25.dp))
                         Button(
                             onClick = {
+                                // Handle the place order logic
                                 navController.navigate(GrenScreen.Check_out_Success.name)
                             },
                             modifier = Modifier
@@ -324,8 +364,7 @@ fun CheckOutScreen_1(
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFF33907C),
                                 contentColor = Color.White
-                            ),
-
+                            )
                         ) {
                             Text(
                                 text = "Place Order",
@@ -337,118 +376,10 @@ fun CheckOutScreen_1(
                                 )
                             )
                         }
+                        Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
             }
         }
     }
 }
-
-@Preview
-@Composable
-fun TopApp_Checkout_1(
-    navController: NavController = NavController(LocalContext.current)
-) {
-    Box(
-        modifier = Modifier
-            .padding(top = 45.dp)
-            .fillMaxWidth()
-            .height(80.dp)
-            .background(color = Color(0xFF33907C))
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .padding(top = 20.dp)
-                .fillMaxWidth()
-                .fillMaxHeight()
-                ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = null,
-                tint = Color.White,
-                modifier = Modifier
-                    .padding(start = 16.dp, bottom = 15.dp) // Padding for icon
-                    .size(24.dp)
-                    .clickable {
-                        navController.navigate(GrenScreen.ProductDetail.name)
-                    }
-            )
-            Spacer(modifier = Modifier.width(5.dp)) // Spacing between icon and text
-            Box(
-                modifier = Modifier
-                    .weight(1f) // Ensure text is centered
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    text = "My Cart",
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontFamily = FontFamily(Font(R.font.montserrat)),
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    ),
-                    modifier = Modifier
-                        .padding(top = 10.dp)
-                        .align(Alignment.Center) // Center the text
-                        .fillMaxHeight()
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun TopApp_Checkout_2() {
-    Box(
-        modifier = Modifier
-            .padding(top = 45.dp)
-            .fillMaxWidth()
-            .height(80.dp)
-            .background(color = Color(0xFF33907C))
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .padding(top = 25.dp)
-                .fillMaxWidth()
-                .fillMaxHeight()
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = null,
-                tint = Color.White,
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .padding(start = 16.dp, bottom = 30.dp)
-                    .size(24.dp)
-                    .clickable {
-
-                    }
-            )
-            Spacer(modifier = Modifier.width(5.dp)) // Spacing between icon and text
-            Box(
-                modifier = Modifier
-                    .padding(bottom = 0.dp)
-                    .weight(1f) // Ensure text is centered
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    text = "Take a Photo of Garbage",
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontFamily = FontFamily(Font(R.font.montserrat)),
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    ),
-                    modifier = Modifier
-                        .align(Alignment.Center) // Center the text
-                        .fillMaxHeight()
-                )
-            }
-        }
-    }
-}
-

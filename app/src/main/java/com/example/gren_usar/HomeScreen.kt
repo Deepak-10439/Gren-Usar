@@ -344,6 +344,7 @@ fun BottomAppBar(navController: NavController) {
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
+            .padding(bottom = 35.dp)
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 10.dp)
     ) {
@@ -369,13 +370,13 @@ fun BottomAppBar(navController: NavController) {
             label = "Browse",
             isSelected = currentScreen == GrenScreen.Browse.name,
             onClick = {
-                navController.navigate(GrenScreen.Browse.name) {
-                    popUpTo(navController.graph.startDestinationId) {
-                        saveState = true
-                    }
-                    launchSingleTop = true
-                    restoreState = true
-                }
+//                navController.navigate(GrenScreen.Browse.name) {
+//                    popUpTo(navController.graph.startDestinationId) {
+//                        saveState = true
+//                    }
+//                    launchSingleTop = true
+//                    restoreState = true
+//                }
             }
         )
 
@@ -385,13 +386,13 @@ fun BottomAppBar(navController: NavController) {
             label = "Store",
             isSelected = currentScreen == GrenScreen.Store.name,
             onClick = {
-                navController.navigate(GrenScreen.Store.name) {
-                    popUpTo(navController.graph.startDestinationId) {
-                        saveState = true
-                    }
-                    launchSingleTop = true
-                    restoreState = true
-                }
+//                navController.navigate(GrenScreen.Store.name) {
+//                    popUpTo(navController.graph.startDestinationId) {
+//                        saveState = true
+//                    }
+//                    launchSingleTop = true
+//                    restoreState = true
+//                }
             }
         )
 
@@ -401,13 +402,13 @@ fun BottomAppBar(navController: NavController) {
             label = "Order History",
             isSelected = currentScreen == GrenScreen.OrderHistory.name,
             onClick = {
-                navController.navigate(GrenScreen.OrderHistory.name) {
-                    popUpTo(navController.graph.startDestinationId) {
-                        saveState = true
-                    }
-                    launchSingleTop = true
-                    restoreState = true
-                }
+//                navController.navigate(GrenScreen.OrderHistory.name) {
+//                    popUpTo(navController.graph.startDestinationId) {
+//                        saveState = true
+//                    }
+//                    launchSingleTop = true
+//                    restoreState = true
+//                }
             }
         )
 

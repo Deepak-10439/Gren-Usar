@@ -3,6 +3,7 @@ package com.example.gren_usar
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -38,6 +40,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -140,18 +143,98 @@ fun CheckOutSuccess(
                     }
             }
         }
+
+            item {
+                Spacer(modifier = Modifier.height(15.dp))
+            }
+            item {
+                Box(modifier = Modifier
+                    .shadow(
+                        elevation = 28.dp,
+                        spotColor = Color(0x12000000),
+                        ambientColor = Color(0x12000000)
+                    )
+                    .padding(0.dp)
+                    .width(379.dp)
+                    .height(404.dp)
+                    .background(color = Color(0xFFFFFFFF)))
+                {
+                    Column {
+                        Text(
+                            text = "Track Order",
+                            style = TextStyle(
+                                fontSize = 18.sp,
+                                lineHeight = 20.sp,
+                                fontFamily = FontFamily(Font(R.font.montserrat)),
+                                fontWeight = FontWeight(600),
+                                color = Color(0xFF212121),
+                            ),
+                            modifier = Modifier
+                                .padding(start = 20.dp)
+                        )
+                        Text(
+                            text = "Order ID - 123455",
+                            style = TextStyle(
+                                fontSize = 14.sp,
+                                lineHeight = 18.sp,
+                                fontFamily = FontFamily(Font(R.font.montserrat)),
+                                fontWeight = FontWeight(500),
+                                color = Color(0xFF606A7B),
+                            ),
+                            modifier = Modifier
+                                .padding(start = 20.dp, top = 5.dp)
+                        )
+                        
+                        Box(
+                            modifier = Modifier
+                                .padding(start = 20.dp, top = 15.dp)
+                                .border(width = 3.dp, color = Color(0xFF33907C))
+                                .padding(3.dp)
+                                .width(68.dp)
+                                .height(1.dp)
+                        ){
+
+                        }
+                        
+                        Image(
+                            painter = painterResource(id = R.drawable.screenshot_2024_08_05_132444),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight()
+                                .align(Alignment.End)
+                                .padding(bottom = 15.dp, start = 15.dp)
+                            )
+
+                    }
+                }
+            }
+
+            item {
+                Box(modifier = Modifier
+                    .padding(0.dp)
+                    .width(379.dp)
+                    .height(146.dp)){
+                    Image(painter = painterResource(id = R.drawable.delivery_address), contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                    )
+                }
+            }
             item{
-                Spacer(modifier = Modifier.height(50.dp))
+                Spacer(modifier = Modifier.height(20.dp))
             }
             item{
                 Box(
                     modifier = Modifier
-                        .width(375.dp)
+                        .fillMaxWidth()
                         .height(50.dp)
                         .background(color = Color(0xFFF6F9FF))
                         .clickable {
                             navController.navigate(GrenScreen.Home.name)
                         }
+
                 ){
                     Text(
                         text = "Continue Shopping",

@@ -106,7 +106,7 @@ fun LoginScreen(navController: NavController, onLoginSuccess: () -> Unit) {
                     onClick = { navController.navigate("signup") },
                     modifier = Modifier
                         .size(width = 151.dp, height = 48.dp)
-                        .background(color = Color(0xFFF4A261), shape = AppShapes.small)
+                        .background(color = Color.Transparent, shape = AppShapes.small)
                         .border(2.dp, Color.White, shape = AppShapes.small)
                 ) {
                     Text(text = "Sign Up", color = Color.White)

@@ -224,6 +224,11 @@ fun ProductDetail(
             }
         }
 
+
+        item {
+            Spacer(modifier = Modifier.height(20.dp))
+        }
+
         item {
             Box(
                 modifier = Modifier
@@ -299,7 +304,6 @@ fun ProductDetail(
                 }
             }
         }
-
         item {
             if (showEcoImpact) {
                 Box(
@@ -519,6 +523,7 @@ fun ProductDetail(
             }
         }
         item {
+            Spacer(modifier = Modifier.height(50.dp))
             Box(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.graphics.Paint
 import android.net.Uri
 import android.util.Log
@@ -44,11 +45,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -345,42 +343,35 @@ fun DrawRectanglesOnImage(edenItems: List<EdenItem>, bitmap: Bitmap?) {
         ) {
             // Draw the image
             drawImage(imageBitmap)
-
-            // Draw rectangles
-            edenItems.forEach { item ->
-                val left = item.x_min.coerceIn(0f, 1f) * size.width
-                val top = item.y_min.coerceIn(0f, 1f) * size.height
-                val right = item.x_max.coerceIn(0f, 1f) * size.width
-                val bottom = item.y_max.coerceIn(0f, 1f) * size.height
-
-                Log.d("DrawRectanglesOnImage", "Rectangle coordinates: left=$left, top=$top, right=$right, bottom=$bottom")
-
-                // Only draw the rectangle if it is within the bounds
-                if (left < right && top < bottom) {
-                    drawRect(
-                        color = Color.Red,
-                        topLeft = Offset(left, top),
-                        size = Size(right - left, bottom - top),
-                        style = Stroke(width = 5f)
-                    )
-                }
-            }
         }
     }
 }
 fun drawRectanglesOnBitmap(bitmap: Bitmap, items: List<EdenItem>): Bitmap {
     val mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true) // Ensure it's mutable
-    val canvas = android.graphics.Canvas(mutableBitmap)
-    val paint = Paint().apply {
-        color = android.graphics.Color.RED
-        style = Paint.Style.STROKE
-        strokeWidth = 5f
-    }
+    val canvas = Canvas(mutableBitmap)
+    val colors = listOf(
+        android.graphics.Color.argb(255, 255, 0, 0),      // Red
+        android.graphics.Color.argb(255, 0, 255, 0),      // Green
+        android.graphics.Color.argb(255, 0, 0, 255),      // Blue
+        android.graphics.Color.argb(255, 255, 255, 0),    // Yellow
+        android.graphics.Color.argb(255, 0, 255, 255),    // Cyan
+        android.graphics.Color.argb(255, 255, 0, 255),    // Magenta
+        android.graphics.Color.argb(255, 255, 165, 0),    // Orange
+        android.graphics.Color.argb(255, 128, 0, 128),    // Purple
+        android.graphics.Color.argb(255, 75, 0, 130),     // Indigo
+        android.graphics.Color.argb(255, 255, 192, 203)   // Pink
+    )
 
     val width = mutableBitmap.width
     val height = mutableBitmap.height
 
-    for (item in items) {
+    items.forEachIndexed { index, item ->
+        val paint = Paint().apply {
+            color = colors[index % colors.size]
+            style = Paint.Style.STROKE
+            strokeWidth = 5f
+        }
+
         val left = (item.x_min.coerceIn(0f, 1f) * width)
         val top = (item.y_min.coerceIn(0f, 1f) * height)
         val right = (item.x_max.coerceIn(0f, 1f) * width)
@@ -491,27 +482,3 @@ suspend fun makeApiCall(fileUrl: String): List<EdenItem>? {
         }
     }
 }
-fun parseApiResponse(response: String): List<EdenItem> {
-    val jsonObject = JSONObject(response)
-    val itemsArray = jsonObject.getJSONArray("items")
-    val edenItems = mutableListOf<EdenItem>()
-    for (i in 0 until itemsArray.length()) {
-        val itemObject = itemsArray.getJSONObject(i)
-        val label = itemObject.getString("label")
-        val confidence = itemObject.getDouble("confidence")
-        val x_min = itemObject.getDouble("x_min").toFloat()
-        val y_min = itemObject.getDouble("y_min").toFloat()
-        val x_max = itemObject.getDouble("x_max").toFloat()
-        val y_max = itemObject.getDouble("y_max").toFloat()
-        edenItems.add(EdenItem(label, confidence, x_min, y_min, x_max, y_max))
-    }
-    return edenItems
-}
-data class EdenItem(
-    val label: String,
-    val confidence: Double,
-    val x_min: Float,
-    val y_min: Float,
-    val x_max: Float,
-    val y_max: Float
-)

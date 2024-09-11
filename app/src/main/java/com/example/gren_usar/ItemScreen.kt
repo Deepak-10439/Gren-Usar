@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -62,35 +63,28 @@ fun ItemsScreen(
     navController: NavHostController = rememberNavController()
 ) {
     Scaffold(
-        topBar = { ItemTopBar() },
-        bottomBar = { BottomAppBar(navController ) }){
+        topBar = { ItemTopBar(navController) },
+        bottomBar = { BottomAppBar(navController) }
+    ) { innerPadding ->
         val grenUiState by mainViewModel.uiState.collectAsState()
         LazyVerticalGrid(
-            columns = GridCells.Adaptive(150.dp),
-            contentPadding = PaddingValues(4.dp),
-            verticalArrangement = Arrangement.spacedBy(3.dp),
-            horizontalArrangement = Arrangement.spacedBy(3.dp)
-        ) 
-        {   
-            item { 
-                Spacer(modifier = Modifier.padding(65.dp))
-            }
-            item {
-                Spacer(modifier = Modifier.padding(65.dp))
-            }
-            items(DataSource.loadItems(grenUiState.selectedCategory)) {
-                Spacer(modifier = Modifier.height(10.dp))
+            columns = GridCells.Adaptive(160.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.padding(innerPadding)
+        ) {   
+            items(DataSource.loadItems(grenUiState.selectedCategory)) { item ->
                 ItemCard(
-                    stringResourceId = it.stringResourceId,
-                    imageResourceId = it.imageResourceId,
-                    price = it.Price,
-                    value = it.footPrint,
+                    stringResourceId = item.stringResourceId,
+                    imageResourceId = item.imageResourceId,
+                    price = item.Price,
+                    value = item.footPrint,
                     onClick = {}
                 )
             }
         }
     }
-
 }
 
 @Composable
@@ -101,76 +95,68 @@ fun ItemCard(
     value: Float,
     onClick: () -> Unit
 ) {
-    Column(modifier = Modifier.padding(8.dp)) {
-        Card(
-            modifier = Modifier
-                .border(
-                    width = 2.dp,
-                    color = Color(0x1A000000),
-                    shape = RoundedCornerShape(size = 10.dp)
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(240.dp)
+            .clickable { onClick() },
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Column {
+            Box(
+                modifier = Modifier
+                    .height(160.dp)
+                    .fillMaxWidth()
+            ) {
+                Image(
+                    painter = painterResource(imageResourceId),
+                    contentDescription = "Item Image",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
                 )
-                .padding(1.dp)
-                .width(150.dp)
-                .height(200.dp)
-                .background(color = Color.White, shape = RoundedCornerShape(size = 10.dp))
-                .clickable { onClick() }
-        ) {
-            Column {
-                Box(
-                    modifier = Modifier
-                        .height(140.dp)
-                        .fillMaxWidth()
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(12.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Image(
-                        painter = painterResource(imageResourceId),
-                        contentDescription = "Item Image",
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Crop
+                    Text(
+                        text = stringResource(id = stringResourceId),
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            fontFamily = FontFamily(Font(R.font.montserrat)),
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.Black
+                        )
+                    )
+                    Text(
+                        text = "$$price",
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            fontFamily = FontFamily(Font(R.font.montserrat)),
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF33907C)
+                        )
                     )
                 }
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(color = Color.White)
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(24.dp)
-                            .padding(horizontal = 5.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = stringResource(id = stringResourceId),
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                fontFamily = FontFamily(Font(R.font.montserrat)),
-                                fontWeight = FontWeight.SemiBold,
-                                color = Color.Black
-                            )
-                        )
-                        Text(
-                            text = "$$price",
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                fontFamily = FontFamily(Font(R.font.montserrat)),
-                                fontWeight = FontWeight.Normal,
-                                color = Color(0xFF33907C)
-                            )
-                        )
-                    }
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Image(
-                            painter = painterResource(id = R.drawable.carbon_foot_print),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .height(27.dp)
-                                .width(30.dp),
-                            contentScale = ContentScale.FillBounds
-                        )
-                        CarbonFootprintBar(value = value)
-                    }
+                    Image(
+                        painter = painterResource(id = R.drawable.carbon_foot_print),
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    CarbonFootprintBar(value = value)
                 }
             }
         }
@@ -179,68 +165,68 @@ fun ItemCard(
 
 @Composable
 fun CarbonFootprintBar(value: Float) {
-    val barColor = if (value > 0.5f) Color(0xFF820000) else Color.Green
-    val barWidth = value.coerceIn(0f, 1f) * 110.dp // Assuming 110.dp as the max width for the bar
+    val barColor = when {
+        value <= 0.3f -> Color(0xFF4CAF50)
+        value <= 0.7f -> Color(0xFFFFC107)
+        else -> Color(0xFFF44336)
+    }
+    val barWidth = value.coerceIn(0f, 1f) * 100.dp
 
     Box(
         modifier = Modifier
-            .background(Color.Gray) // Background color for the whole bar
-            .width(110.dp) // Fixed width to fit the parent container
-            .height(12.dp)
+            .fillMaxWidth()
+            .height(8.dp)
+            .background(Color(0xFFE0E0E0), RoundedCornerShape(4.dp))
     ) {
         Box(
             modifier = Modifier
-                .background(barColor)
                 .width(barWidth)
-                .height(12.dp)
+                .fillMaxHeight()
+                .background(barColor, RoundedCornerShape(4.dp))
         )
     }
 }
-@Preview
+
 @Composable
-fun ItemTopBar(
-    navController: NavHostController = rememberNavController(),
-) {
+fun ItemTopBar(navController: NavHostController) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = GrenScreen.valueOf(
         backStackEntry?.destination?.route ?: GrenScreen.Items.name
     )
     val canNavigateBack = navController.previousBackStackEntry != null
 
-    // For Green Background
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(165.dp)
+            .height(180.dp)
             .background(color = Color(0xFF33907C))
-            .padding(horizontal = 16.dp, vertical = 24.dp) // Adjust padding
+            .padding(horizontal = 16.dp, vertical = 16.dp)
     ) {
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxHeight()
         ) {
-            // For back Icon and screen name
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth().padding(top =20.dp)
+                modifier = Modifier.fillMaxWidth().padding(top = 24.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = "Back",
                     tint = Color.White,
                     modifier = Modifier
-                        .size(24.dp) // Consistent icon size
+                        .size(24.dp)
                         .clickable {
                             if (canNavigateBack) {
-                                navController.navigateUp() // Handle back navigation
+                                navController.navigateUp()
                             }
                         }
                 )
                 Text(
-                    text = currentScreen.name, // Display screen name
+                    text = currentScreen.name,
                     style = TextStyle(
-                        fontSize = 20.sp, // Adjust font size
+                        fontSize = 20.sp,
                         fontFamily = FontFamily(Font(R.font.montserrat)),
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
@@ -248,76 +234,50 @@ fun ItemTopBar(
                     ),
                     modifier = Modifier
                         .weight(1f)
-                        .padding(horizontal = 16.dp) // Padding around text
+                        .padding(horizontal = 16.dp)
                 )
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-            // For 3 UI elements
             Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                // For Sort By
-                ButtonWithIconAndText(
-                    icon = Icons.Default.List,
-                    text = "Sort By"
-                )
-
-                // For Location
-                ButtonWithIconAndText(
-                    icon = Icons.Default.LocationOn,
-                    text = "Location"
-                )
-
-                // For Category
-                ButtonWithIconAndText(
-                    icon = Icons.Default.Menu,
-                    text = "Category"
-                )
+                ButtonWithIconAndText(icon = Icons.Default.List, text = "Sort By")
+                ButtonWithIconAndText(icon = Icons.Default.LocationOn, text = "Location")
+                ButtonWithIconAndText(icon = Icons.Default.Menu, text = "Category")
             }
         }
     }
 }
 
 @Composable
-fun ButtonWithIconAndText(
-    icon: ImageVector,
-    text: String
-) {
+fun ButtonWithIconAndText(icon: ImageVector, text: String) {
     Box(
         modifier = Modifier
-            .border(
-                width = 2.dp,
-                color = Color.White,
-                shape = RoundedCornerShape(23.dp)
-            )
-            .width(112.dp)
-            .height(36.dp)
-            .padding(horizontal = 8.dp)
+            .border(width = 1.dp, color = Color.White, shape = RoundedCornerShape(20.dp))
+            .padding(horizontal = 12.dp, vertical = 8.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxSize()
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
                 tint = Color.White,
-                modifier = Modifier.size(16.dp) // Consistent icon size
+                modifier = Modifier.size(18.dp)
             )
-            Spacer(modifier = Modifier.width(4.dp))
+            Spacer(modifier = Modifier.width(6.dp))
             Text(
                 text = text,
                 style = TextStyle(
-                    fontSize = 14.sp, // Adjust font size
+                    fontSize = 14.sp,
                     fontFamily = FontFamily(Font(R.font.montserrat)),
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    textAlign = TextAlign.Center
+                    fontWeight = FontWeight.Medium,
+                    color = Color.White
                 )
             )
         }

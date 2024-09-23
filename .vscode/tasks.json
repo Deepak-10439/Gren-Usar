@@ -1,0 +1,38 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "java (build)",
+			"paths": [
+				"${workspace}"
+			],
+			"isFullBuild": true,
+			"group": "build",
+			"problemMatcher": [],
+			"label": "java (build): Build Workspace",
+			"detail": "$(tools) Build all the Java projects in workspace."
+		},
+		{
+            "label": "assembleDebug",
+            "type": "shell",
+            "command": "./gradlew assembleDebug",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gradle"],
+            "detail": "Assembles the Android project."
+        },
+        {
+            "label": "installDebug",
+            "type": "shell",
+            "command": "./gradlew installDebug",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": ["$gradle"],
+            "detail": "Installs the app on a connected device/emulator."
+        }
+	]
+}

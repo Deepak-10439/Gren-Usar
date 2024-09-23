@@ -47,7 +47,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
 import androidx.navigation.NavController
-
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 @Composable
 fun ProductDetail(
     navController: NavController
@@ -411,7 +412,7 @@ fun ProductDetail(
                             modifier = Modifier
                                 .padding(start = 20.dp,top = 10.dp)
                         ) {
-                            ItemCard(
+                            ItemCard2(
                                     stringResourceId = R.string.Alternative1,
                                     imageResourceId = R.drawable.eco_toilet_paper,
                                     price = 25,
@@ -448,7 +449,7 @@ fun ProductDetail(
                             modifier = Modifier
                                 .padding(start = 20.dp, top = 10.dp)
                         ) {
-                            ItemCard(
+                            ItemCard2(
                                 stringResourceId = R.string.Alternative2,
                                 imageResourceId = R.drawable.eco_toilet_paper_2,
                                 price = 25,
@@ -619,7 +620,81 @@ fun ProductDetail(
         }
     }
 }
-
+@Composable
+fun ItemCard2(
+    stringResourceId: Int,
+    imageResourceId: Int,
+    price: Int,
+    value: Float,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(240.dp)
+            .clickable { onClick() },
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Column {
+            Box(
+                modifier = Modifier
+                    .height(160.dp)
+                    .fillMaxWidth()
+            ) {
+                Image(
+                    painter = painterResource(imageResourceId),
+                    contentDescription = "Item Image",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(12.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(id = stringResourceId),
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            fontFamily = FontFamily(Font(R.font.montserrat)),
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.Black
+                        )
+                    )
+                    Text(
+                        text = "$$price",
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            fontFamily = FontFamily(Font(R.font.montserrat)),
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF33907C)
+                        )
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.carbon_foot_print),
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    CarbonFootprintBar(value = value)
+                }
+            }
+        }
+    }
+}
 @Composable
 fun CarbonFootprintBarProductDetail(value: Float) {
     val barColor = if (value > 0.5f) Color(0xFF820000) else Color.Green

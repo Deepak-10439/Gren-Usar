@@ -2,6 +2,7 @@ package com.example.gren_usar
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -48,7 +49,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
 import androidx.navigation.NavController
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.ui.res.stringResource
+
 @Composable
 fun ProductDetail(
     navController: NavController
@@ -622,74 +624,82 @@ fun ProductDetail(
 }
 @Composable
 fun ItemCard2(
-    stringResourceId: Int,
-    imageResourceId: Int,
-    price: Int,
-    value: Float,
+    imageResourceId: Int,        // Add image resource parameter
+    stringResourceId: Int,       // Add string resource parameter for the name
+    price: Int,                // Add price as a parameter
+    value: Float,                // Carbon footprint value
     onClick: () -> Unit
 ) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(240.dp)
-            .clickable { onClick() },
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ) {
-        Column {
-            Box(
-                modifier = Modifier
-                    .height(160.dp)
-                    .fillMaxWidth()
-            ) {
-                Image(
-                    painter = painterResource(imageResourceId),
-                    contentDescription = "Item Image",
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
+    Column(modifier = Modifier.padding(8.dp)) {
+        Card(
+            modifier = Modifier
+                .border(
+                    width = 2.dp,
+                    color = Color(0x1A000000),
+                    shape = RoundedCornerShape(size = 10.dp)
                 )
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(12.dp)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = stringResource(id = stringResourceId),
-                        style = TextStyle(
-                            fontSize = 16.sp,
-                            fontFamily = FontFamily(Font(R.font.montserrat)),
-                            fontWeight = FontWeight.SemiBold,
-                            color = Color.Black
-                        )
-                    )
-                    Text(
-                        text = "$$price",
-                        style = TextStyle(
-                            fontSize = 16.sp,
-                            fontFamily = FontFamily(Font(R.font.montserrat)),
-                            fontWeight = FontWeight.Bold,
-                            color = Color(0xFF33907C)
-                        )
-                    )
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
+                .padding(1.dp)
+                .width(150.dp)
+                .height(200.dp)
+                .background(color = Color.White, shape = RoundedCornerShape(size = 10.dp))
+                .clickable { onClick() }
+        ) {
+            Column {
+                Box(
+                    modifier = Modifier
+                        .height(140.dp)
+                        .fillMaxWidth()
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.carbon_foot_print),
-                        contentDescription = null,
-                        modifier = Modifier.size(24.dp)
+                        painter = painterResource(id = imageResourceId),  // Using the imageResourceId parameter
+                        contentDescription = "Item Image",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    CarbonFootprintBar(value = value)
+                }
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = Color.White)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(24.dp)
+                            .padding(horizontal = 5.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = stringResource(id = stringResourceId),  // Using stringResourceId
+                            style = TextStyle(
+                                fontSize = 14.sp,
+                                fontFamily = FontFamily(Font(R.font.montserrat)),  // Ensure font is available
+                                fontWeight = FontWeight.SemiBold,
+                                color = Color.Black
+                            )
+                        )
+                        Text(
+                            text = "$$price",  // Using the price parameter
+                            style = TextStyle(
+                                fontSize = 14.sp,
+                                fontFamily = FontFamily(Font(R.font.montserrat)),
+                                fontWeight = FontWeight.Normal,
+                                color = Color(0xFF33907C)
+                            )
+                        )
+                    }
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Image(
+                            painter = painterResource(id = R.drawable.carbon_foot_print),  // Ensure this drawable exists
+                            contentDescription = null,
+                            modifier = Modifier
+                                .height(27.dp)
+                                .width(30.dp),
+                            contentScale = ContentScale.FillBounds
+                        )
+                        CarbonFootprintBar(value = value)  // Using the value parameter
+                    }
                 }
             }
         }

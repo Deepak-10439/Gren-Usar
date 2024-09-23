@@ -21,6 +21,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -48,265 +52,213 @@ fun CheckOutSuccess(
     navController: NavController
 ) {
     Scaffold(
-        topBar = {TopApp_Checkout_Success()}
-    ) {innerPadding ->
+        topBar = { TopApp_Checkout_Success(navController) }
+    ) { innerPadding ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
+                .background(Color(0xFFF6F9FF))
         ) {
             item {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                     modifier = Modifier
-                        .padding(start = 100.dp, top = 30.dp)
+                        .fillMaxWidth()
+                        .padding(vertical = 32.dp)
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.done),
-                        contentDescription = null,
+                        contentDescription = "Order Completed",
                         modifier = Modifier
-                            .width(160.31682.dp)
-                            .height(100.99998.dp)
-                            .align(Alignment.CenterHorizontally)
+                            .size(120.dp)
                     )
+                    Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = "Thanks for Order",
+                        text = "Thanks for Your Order!",
                         style = TextStyle(
                             fontSize = 24.sp,
                             fontFamily = FontFamily(Font(R.font.montserrat)),
-                            fontWeight = FontWeight(700),
-                            color = Color(0xFF4F4F4F),
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF33907C),
                             textAlign = TextAlign.Center,
                         )
                     )
                 }
             }
 
-            item{
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(190.dp)
-                        .background(color = Color(0xFFFFFFFF))
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .padding(start = 10.dp, top = 35.dp, end = 12.dp)
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.eco_toilet_paper_2),
-                            contentDescription = "image description",
-                            contentScale = ContentScale.FillBounds,
-                            modifier = Modifier
-                                .width(122.dp)
-                                .height(122.dp)
-                                .background(
-                                    color = Color(0xFFC4C4C4),
-                                    shape = RoundedCornerShape(size = 10.dp)
-                                )
-                                .align(Alignment.CenterVertically)
-                        )
-                        Column {
-                            Text(
-                                text = "ECO Toiler Paper",
-                                style = TextStyle(
-                                    fontSize = 16.sp,
-                                    fontFamily = FontFamily(Font(R.font.montserrat)),
-                                    fontWeight = FontWeight(600),
-                                    color = Color(0xFF4F4F4F),
-                                )
-                            )
-                            Spacer(modifier = Modifier.height(15.dp))
-                            Text(
-                                    text = "$25",
-                                    style = TextStyle(
-                                        fontSize = 18.sp,
-                                        fontFamily = FontFamily(Font(R.font.montserrat)),
-                                        fontWeight = FontWeight(700),
-                                        color = Color(0xFF33907C),
-                                    )
-                            )
-                            Spacer(modifier = Modifier.height(10.dp))
-                            Text(
-                                text = "Qty : 1",
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontFamily = FontFamily(Font(R.font.montserrat)),
-                                    fontWeight = FontWeight(500),
-                                    color = Color(0xFF4F4F4F),
-                                )
-                            )
-                        }
-                    }
+            item {
+                OrderItemCard()
+            }
+
+            item {
+                TrackOrderCard()
+            }
+
+            item {
+                DeliveryAddressCard()
+            }
+
+            item {
+                ContinueShoppingButton(navController)
             }
         }
-
-            item {
-                Spacer(modifier = Modifier.height(15.dp))
-            }
-            item {
-                Box(modifier = Modifier
-                    .shadow(
-                        elevation = 28.dp,
-                        spotColor = Color(0x12000000),
-                        ambientColor = Color(0x12000000)
-                    )
-                    .padding(0.dp)
-                    .width(379.dp)
-                    .height(404.dp)
-                    .background(color = Color(0xFFFFFFFF)))
-                {
-                    Column {
-                        Text(
-                            text = "Track Order",
-                            style = TextStyle(
-                                fontSize = 18.sp,
-                                lineHeight = 20.sp,
-                                fontFamily = FontFamily(Font(R.font.montserrat)),
-                                fontWeight = FontWeight(600),
-                                color = Color(0xFF212121),
-                            ),
-                            modifier = Modifier
-                                .padding(start = 20.dp)
-                        )
-                        Text(
-                            text = "Order ID - 123455",
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                lineHeight = 18.sp,
-                                fontFamily = FontFamily(Font(R.font.montserrat)),
-                                fontWeight = FontWeight(500),
-                                color = Color(0xFF606A7B),
-                            ),
-                            modifier = Modifier
-                                .padding(start = 20.dp, top = 5.dp)
-                        )
-                        
-                        Box(
-                            modifier = Modifier
-                                .padding(start = 20.dp, top = 15.dp)
-                                .border(width = 3.dp, color = Color(0xFF33907C))
-                                .padding(3.dp)
-                                .width(68.dp)
-                                .height(1.dp)
-                        ){
-
-                        }
-                        
-                        Image(
-                            painter = painterResource(id = R.drawable.screenshot_2024_08_05_132444),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight()
-                                .align(Alignment.End)
-                                .padding(bottom = 15.dp, start = 15.dp)
-                            )
-
-                    }
-                }
-            }
-
-            item {
-                Box(modifier = Modifier
-                    .padding(0.dp)
-                    .width(379.dp)
-                    .height(146.dp)){
-                    Image(painter = painterResource(id = R.drawable.delivery_address), contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .fillMaxHeight()
-                    )
-                }
-            }
-            item{
-                Spacer(modifier = Modifier.height(20.dp))
-            }
-            item{
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .background(color = Color(0xFFF6F9FF))
-                        .clickable {
-                            navController.navigate(GrenScreen.Home.name)
-                        }
-
-                ){
-                    Text(
-                        text = "Continue Shopping",
-                        style = TextStyle(
-                            fontSize = 14.sp,
-                            lineHeight = 20.sp,
-                            fontFamily = FontFamily(Font(R.font.montserrat)),
-                            fontWeight = FontWeight(600),
-                            color = Color(0xFF212121),
-                            textAlign = TextAlign.Center,
-                        ),
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                    )
-                }
-            }
     }
 }
 
 @Composable
-fun TopApp_Checkout_Success(
-    navController: NavController = NavController(LocalContext.current)
-) {
-    Box(
+fun OrderItemCard() {
+    Card(
         modifier = Modifier
-            .padding(top = 45.dp)
             .fillMaxWidth()
-            .height(80.dp)
-            .background(color = Color(0xFF33907C))
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
             modifier = Modifier
-                .padding(top = 20.dp)
-                .fillMaxWidth()
-                .fillMaxHeight()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(
-                imageVector = Icons.Default.Close,
-                contentDescription = null,
-                tint = Color.White,
+            Image(
+                painter = painterResource(id = R.drawable.eco_toilet_paper_2),
+                contentDescription = "ECO Toilet Paper",
+                contentScale = ContentScale.FillBounds,
                 modifier = Modifier
-                    .padding(start = 16.dp, bottom = 15.dp) // Padding for icon
-                    .size(24.dp)
-                    .clickable {
-                        navController.navigate(GrenScreen.Home.name)
-                    }
+                    .size(122.dp)
+                    .background(
+                        color = Color(0xFFC4C4C4),
+                        shape = RoundedCornerShape(size = 10.dp)
+                    )
             )
-            Spacer(modifier = Modifier.width(5.dp)) // Spacing between icon and text
-            Box(
-                modifier = Modifier
-                    .weight(1f) // Ensure text is centered
-                    .fillMaxWidth()
-            ) {
+            Spacer(modifier = Modifier.width(16.dp))
+            Column {
                 Text(
-                    text = "Order Details",
+                    text = "ECO Toilet Paper",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.montserrat)),
+                        fontWeight = FontWeight(600),
+                        color = Color(0xFF4F4F4F),
+                    )
+                )
+                Spacer(modifier = Modifier.height(15.dp))
+                Text(
+                    text = "$25",
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontFamily = FontFamily(Font(R.font.montserrat)),
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    ),
-                    modifier = Modifier
-                        .padding(top = 10.dp)
-                        .align(Alignment.Center) // Center the text
-                        .fillMaxHeight()
+                        fontWeight = FontWeight(700),
+                        color = Color(0xFF33907C),
+                    )
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = "Qty: 1",
+                    style = TextStyle(
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily(Font(R.font.montserrat)),
+                        fontWeight = FontWeight(500),
+                        color = Color(0xFF4F4F4F),
+                    )
                 )
             }
         }
     }
 }
+
+@Composable
+fun TrackOrderCard() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(
+                text = "Track Order",
+                style = TextStyle(
+                    fontSize = 18.sp,
+                    lineHeight = 20.sp,
+                    fontFamily = FontFamily(Font(R.font.montserrat)),
+                    fontWeight = FontWeight(600),
+                    color = Color(0xFF212121),
+                )
+            )
+            Text(
+                text = "Order ID - 123455",
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    lineHeight = 18.sp,
+                    fontFamily = FontFamily(Font(R.font.montserrat)),
+                    fontWeight = FontWeight(500),
+                    color = Color(0xFF606A7B),
+                )
+            )
+            Spacer(modifier = Modifier.height(15.dp))
+            Box(
+                modifier = Modifier
+                    .border(width = 3.dp, color = Color(0xFF33907C))
+                    .padding(3.dp)
+                    .width(68.dp)
+                    .height(1.dp)
+            ) {}
+            Spacer(modifier = Modifier.height(15.dp))
+            Image(
+                painter = painterResource(id = R.drawable.screenshot_2024_08_05_132444),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .align(Alignment.End)
+            )
+        }
+    }
+}
+
+@Composable
+fun DeliveryAddressCard() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.delivery_address),
+            contentDescription = "Delivery Address",
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+        )
+    }
+}
+
+@Composable
+fun ContinueShoppingButton(navController: NavController) {
+    Button(
+        onClick = { navController.navigate(GrenScreen.Home.name) },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 24.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF33907C))
+    ) {
+        Text(
+            text = "Continue Shopping",
+            style = TextStyle(
+                fontSize = 16.sp,
+                fontFamily = FontFamily(Font(R.font.montserrat)),
+                fontWeight = FontWeight.SemiBold,
+                color = Color.White
+            )
+        )
+    }
 }
 
 @Composable

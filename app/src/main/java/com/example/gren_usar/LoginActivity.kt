@@ -30,16 +30,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.gren_usar.ui.theme.GrenUsarTheme
 import com.google.firebase.auth.FirebaseAuth
-
-class LoginActivity : ComponentActivity() {
-
-}
 
 @Composable
 fun LoginScreen(navController: NavController, onLoginSuccess: () -> Unit) {
@@ -87,42 +81,9 @@ fun LoginScreen(navController: NavController, onLoginSuccess: () -> Unit) {
                 fontSize = 16.sp,
                 modifier = Modifier.padding(top = 8.dp, bottom = 32.dp)
             )
-
-//            OutlinedTextField(
-//                value = email.value,
-//                onValueChange = { email.value = it },
-//                label = { Text("Email") },
-//                modifier = Modifier.fillMaxWidth(),
-//                colors = OutlinedTextFieldDefaults.colors(
-//                    focusedBorderColor = Color.White,
-//                    unfocusedBorderColor = Color.White.copy(alpha = 0.7f),
-//                    focusedLabelColor = Color.White,
-//                    unfocusedLabelColor = Color.White.copy(alpha = 0.7f),
-//                    cursorColor = Color.White
-//                )
-//            )
             CustomTextField(value = email.value, onValueChange = { email.value = it }, hint = "Enter Email", isPassword = false)
-
-
             Spacer(modifier = Modifier.height(16.dp))
-
-//            OutlinedTextField(
-//                value = password.value,
-//                onValueChange = { password.value = it },
-//                label = { Text("Password") },
-//                visualTransformation = PasswordVisualTransformation(),
-//                modifier = Modifier.fillMaxWidth(),
-//                colors = OutlinedTextFieldDefaults.colors(
-//                    focusedBorderColor = Color.White,
-//                    unfocusedBorderColor = Color.White.copy(alpha = 0.7f),
-//                    focusedLabelColor = Color.White,
-//                    unfocusedLabelColor = Color.White.copy(alpha = 0.7f),
-//                    cursorColor = Color.White
-//                )
-//            )
             CustomTextField(value = password.value, onValueChange = { password.value = it }, hint = "Enter Password", isPassword = true)
-
-
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(
@@ -180,15 +141,6 @@ fun LoginScreen(navController: NavController, onLoginSuccess: () -> Unit) {
         }
     }
 }
-
-@Preview
-@Composable
-fun LoginScreenPreview() {
-    GrenUsarTheme {
-//        LoginScreen(rememberNavController())
-    }
-}
-
 fun loginEmailPassUser(email: String, password: String, navController: NavController, auth: FirebaseAuth) {
     if (email.isNotEmpty() && password.isNotEmpty()) {
         auth.signInWithEmailAndPassword(email, password)

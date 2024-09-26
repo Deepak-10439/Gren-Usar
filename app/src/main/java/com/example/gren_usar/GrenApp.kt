@@ -35,7 +35,7 @@ fun GrenApp(
 
     NavHost(
         navController = navController,
-        startDestination = GrenScreen.Login.name
+        startDestination = GrenScreen.Check_out_Screen_2.name
     ) {
         composable(route = GrenScreen.Login.name) {
             LoginScreen(navController, onLoginSuccess = {

@@ -41,7 +41,7 @@ src="./app/src/main/res/Github/ItemScreen.jpg" width="200"> &nbsp; <img
 src="./app/src/main/res/Github/Product Details Screen.jpg" width="200"> &nbsp; <img
 src="./app/src/main/res/Github/Product Details Alternatives.jpg" width="200"> &nbsp; <img
 src="./app/src/main/res/Github/Checkout Screen.jpg" width="200"> &nbsp; <img
-src="./app/src/main/res/Github/Object_Detect.jpg" width="200"> &nbsp; <img
+src="./app/src/main/res/Github/Object_detect.jpg" width="200"> &nbsp; <img
 src="./app/src/main/res/Github/Order Scuccess Screen.jpg" width="200">
 
 
